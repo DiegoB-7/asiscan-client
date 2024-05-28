@@ -2,7 +2,8 @@
     import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables'
     import { onMount,afterUpdate } from 'svelte';
     import toast, { Toaster } from 'svelte-french-toast';
-    import { getEvents,getEventData,editEvent,getEvent,getEventExcel } from '../../../../API/events.svelte';
+    import { getEvents,getEventData,editEvent,getEvent,getEventExcel,getAssistData,updateAssist,deleteAssist } from '../../../../API/events.svelte';
+    
     import autoAnimate from "@formkit/auto-animate"
     import { createEventDispatcher } from 'svelte';
 
@@ -12,6 +13,7 @@
     let modalCreateRegister:any;
     let modalExportExcel:any;
     let name:string = '';
+    let assistData:any = {};
     let quantityAssist:number = 0;
     let handler = new DataHandler(data,{rowsPerPage: 5});
     let rows = handler.getRows();
@@ -24,6 +26,10 @@
         rows = handler.getRows();
     })
 
+    async function loadEventData(){
+        dispatch('loadData');
+
+    }
     function getRegisterIDOrAlert(){
         let eventsIDList:number[] = [];
         selected.subscribe(value => {
@@ -70,7 +76,71 @@
         const ExportExcel =  bootstrap.Modal.getOrCreateInstance(modalExportExcel);
         ExportExcel.hide();
     }
+    async function showEditRegisterModal(){
+        let registerID = getRegisterIDOrAlert();
+        if(registerID){
+            const bootstrap = await import('bootstrap');
+            // @ts-ignore
+            loadAssistData();
+            const EditEvent =  bootstrap.Modal.getOrCreateInstance(modalEditRegister);
+            EditEvent.show();
+        }
+    }
 
+    async function deleteAssistData(){
+        let registerID = getRegisterIDOrAlert();
+        if(registerID){
+            let response = await deleteAssist(registerID as number);
+            if(response.status == 200){
+                loadEventData();
+                hideDeleteRegisterModal();
+                toast.success('Registro eliminado');
+            }
+            else{
+                toast.error('Error al eliminar el registro');
+            }
+        }
+    }
+
+    async function loadAssistData(){
+        let registerID = getRegisterIDOrAlert();
+        if(registerID){
+            let response = await getAssistData(registerID);
+            assistData = await response.json();
+            
+        }
+    }
+
+    async function updateAssistData(){
+        let registerID = getRegisterIDOrAlert();
+        if(assistData.quantity_assist){
+            let response = await updateAssist(registerID as number,assistData.quantity_assist);
+            if(response.status == 200){
+                loadEventData();
+                emptyAssistData();
+                hideEditRegisterModal();
+                toast.success('Registro actualizado');
+            }
+            else{
+                toast.error('Error al actualizar el registro');
+            }
+        }
+        else{
+            toast.error('La cantidad de asistencias es requerida');
+        }
+        
+    }
+
+    function emptyAssistData(){
+        assistData = {};
+    }
+
+    async function hideEditRegisterModal(){
+        const bootstrap = await import('bootstrap');
+        // @ts-ignore
+        const EditEvent =  bootstrap.Modal.getOrCreateInstance(modalEditRegister);
+        EditEvent.hide();
+    }
     async function generateExcelReport(){
         if(quantityAssist == 0){
             toast.error('La cantidad minima de asistencias es requerida');
@@ -90,8 +160,8 @@
 <div class="page-header pt-3">
     <h5 class="text-right">Acciones</h5>
     <div class="d-flex flex-row-reverse ">
-        <button class="btn btn-primary btn-sm mx-1" >Modificar registro</button>
-        <button class="btn btn-success btn-sm mx-1" >Agregar registro</button>
+        <button class="btn btn-primary btn-sm mx-1" on:click={showEditRegisterModal}>Modificar registro</button>
+        
         <button class="btn btn-danger btn-sm mx-1" on:click={showDeleteRegisterModal} >Eliminar registro</button>
         <button class="btn btn-info btn-sm mx-1" on:click={showExportExcelModal}>Exportar lista de asistencias</button>
     </div>
@@ -136,25 +206,6 @@
 
 <Toaster />
 
-<div class="modal fade" bind:this={modalEditRegister} tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modificar registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar cambios</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" bind:this={modalDeleteRegister} tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -167,7 +218,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" on:click={hideDeleteRegisterModal}>Cancelar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-danger" on:click={deleteAssistData}>Eliminar</button>
             </div>
         </div>
     </div>
@@ -189,6 +240,42 @@
                 <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" on:click={hideExportExcelModal}>Cerrar</button>
                 <button type="submit" class="btn btn-success" on:click={generateExcelReport}>Exportar lista</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" bind:this={modalEditRegister} tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modificar asistencia</h5>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Nombre</label>
+                        <input type="text" readonly disabled class="form-control" id="name" aria-describedby="emailHelp" bind:value={assistData.student}>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">No. control</label>
+                        <input type="text" readonly disabled class="form-control" id="name" aria-describedby="emailHelp" bind:value={assistData.control_number}>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Carrera</label>
+                        <input type="text" readonly disabled class="form-control" id="name" aria-describedby="emailHelp" bind:value={assistData.career}>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Cantidad de asistencias</label>
+                        <input type="number" class="form-control" id="name" aria-describedby="emailHelp" bind:value={assistData.quantity_assist}>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" on:click={hideEditRegisterModal}>Cerrar</button>
+                <button type="submit" class="btn btn-success" on:click={updateAssistData}>Exportar lista</button>
                 </div>
             </form>
         </div>

@@ -15,7 +15,7 @@
 
     async function loadEventData(){
         showLoading();
-        const response = await getEventData(data.id);
+        const response = await getEventData(Number(data.id));
         if(response.ok){
             const responseData = await response.json();
             
@@ -34,7 +34,6 @@
     }
 
     async function handlegenerateExcel(event:any){
-        
         const response = await getEventExcel(data.id,event.detail.quantity);
         if(response.ok){
             const blob = await response.blob();
@@ -57,7 +56,7 @@
 <hr>
 <div class="row">
     <div class="col-md-12">
-        <Eventsdetailtable data={assistances} on:generateExcel={handlegenerateExcel}/>
+        <Eventsdetailtable data={assistances} on:generateExcel={handlegenerateExcel} on:loadData={loadEventData}/>
     </div>
 </div>
 

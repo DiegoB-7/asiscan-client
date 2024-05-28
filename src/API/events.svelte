@@ -31,7 +31,6 @@
     }
 
     export async function deleteEvent(id:number){
-       
         const response = await fetch(`${environment.API_URL}/events/${id}`, {
             method: 'DELETE',
             headers: {
@@ -43,7 +42,6 @@
     }
 
     export async function editEvent(id:number,name:string){
-       
         const response = await fetch(`${environment.API_URL}/events/${id}`, {
             method: 'PUT',
             headers: {
@@ -56,7 +54,6 @@
     }
 
     export async function getEvent(id:number){
-       
         const response = await fetch(`${environment.API_URL}/events/detail/${id}`, {
             method: 'GET',
             headers: {
@@ -67,8 +64,7 @@
         return response;
     }
 
-    export async function getEventData(id:string){
-       
+    export async function getEventData(id:number){
         const response = await fetch(`${environment.API_URL}/events/${id}`, {
             method: 'GET',
             headers: {
@@ -79,8 +75,40 @@
         return response;
     }
 
+    export async function deleteAssist(id:number){
+        const response = await fetch(`${environment.API_URL}/events/assist/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return response;
+    }
+
+    export async function getAssistData(id:number){
+        const response = await fetch(`${environment.API_URL}/events/assist/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return response;
+    }
+    
+    export async function updateAssist(id:number,quantity:number){
+        const response = await fetch(`${environment.API_URL}/events/assist/${id}/${quantity}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            
+        });
+
+        return response;
+    }
     export async function getEventExcel(id:string,quantity:number){
-       
         const response = await fetch(`${environment.API_URL}/events/download_report/${id}/${quantity}`, {
             method: 'GET',
             headers: {
