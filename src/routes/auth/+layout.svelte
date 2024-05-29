@@ -17,7 +17,7 @@ onMount(async () => {
 });</script>
 
 <body>
-  <Navbar />
+    <Navbar />
   <main class="container">
     <slot></slot>
   </main>

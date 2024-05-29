@@ -8,13 +8,15 @@
     if (!browser) return;
   
     // this is enough for most components
-    await import("bootstrap");
+    // await import("bootstrap");
+    await import("../main.scss");
   
     // some components require a bootstrap instance, to fulfil their job. In that case, use this:
     // const bootstrap = await import("bootstrap");
     // sample usage: 
     // const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-  });</script>
+  });
+  </script>
 
   <svelte:head>
     <title>Asiscan</title>

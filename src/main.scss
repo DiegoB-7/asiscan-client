@@ -1,0 +1,8 @@
+// src/styles/custom.scss
+$primary: #142A6F; // Color principal personalizado
+$secondary: #6c757d; // Otro color personalizado
+
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+@import 'node_modules/bootstrap/scss/bootstrap';
