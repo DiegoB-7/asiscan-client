@@ -15,5 +15,61 @@
 
         return response;
     }
+    
+    export async function getUsers(){
+        const token = getToken();
+       
+        const response = await fetch(`${environment.API_URL}/users`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
+        return response;
+    }
+    
+    export async function getUser(id:number){
+        const token = getToken();
+       
+        const response = await fetch(`${environment.API_URL}/users/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response;
+    }
+
+    export async function deleteUser(id:number){
+        const token = getToken();
+       
+        const response = await fetch(`${environment.API_URL}/users/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response;
+    }
+
+    export async function updateUser(id:number,user:any){
+        const token = getToken();
+       
+        const response = await fetch(`${environment.API_URL}/users/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(user)
+        });
+
+        return response;
+    }
 </script>

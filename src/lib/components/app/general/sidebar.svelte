@@ -52,7 +52,7 @@
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
             
             <!-- svelte-ignore a11y-invalid-attribute -->
-            <li><a class="dropdown-item p-2" href="#"><i class="bi bi-person-fill"></i>Perfil</a></li>
+            
             <li>
                 <hr class="dropdown-divider">
             </li>

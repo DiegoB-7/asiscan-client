@@ -28,6 +28,19 @@
 
         return response;
     }
+    
+    export async function getStudent(id:number) {
+        const token = getToken();
+        const response = await fetch(`${environment.API_URL}/students/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response;
+    }
 
     export async function saveStudent(student:any) {
         const token = getToken();
@@ -44,6 +57,34 @@
         return response;
     }
 
+    export async function deleteStudent(id:number) {
+        const token = getToken();
+
+        const response = await fetch(`${environment.API_URL}/students/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response;
+    }
+
+    export async function updateStudent(id:number,student:any) {
+        const token = getToken();
+
+        const response = await fetch(`${environment.API_URL}/students/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(student)
+        });
+
+        return response;
+    }
     export async function saveStudentAssitanceByControlNumber(controlNumber:string, event_id:string) {
         const token = getToken();
 

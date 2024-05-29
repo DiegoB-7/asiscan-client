@@ -76,12 +76,18 @@
         const ExportExcel =  bootstrap.Modal.getOrCreateInstance(modalExportExcel);
         ExportExcel.hide();
     }
+
+    function resetSelected(){
+        selected.set([]);
+    }
+
     async function showEditRegisterModal(){
         let registerID = getRegisterIDOrAlert();
         if(registerID){
             const bootstrap = await import('bootstrap');
             // @ts-ignore
             loadAssistData();
+            resetSelected();
             const EditEvent =  bootstrap.Modal.getOrCreateInstance(modalEditRegister);
             EditEvent.show();
         }
@@ -94,6 +100,7 @@
             if(response.status == 200){
                 loadEventData();
                 hideDeleteRegisterModal();
+                resetSelected();
                 toast.success('Registro eliminado');
             }
             else{
@@ -275,7 +282,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" on:click={hideEditRegisterModal}>Cerrar</button>
-                <button type="submit" class="btn btn-success" on:click={updateAssistData}>Exportar lista</button>
+                <button type="submit" class="btn btn-success" on:click={updateAssistData}>Guardar</button>
                 </div>
             </form>
         </div>

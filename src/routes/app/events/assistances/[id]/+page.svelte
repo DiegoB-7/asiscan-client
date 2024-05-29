@@ -145,6 +145,7 @@
                 if (response.status === 200) {
                     toast.success('Estudiante registrado correctamente');
                     let data = await response.json();
+                    
                     tmpStudents = [...tmpStudents, data];
                     console.log(data)
                 } else {
@@ -207,8 +208,8 @@
                 
                     <div class="bg-light rounded-lg p-2  d-flex justify-content-center align-items-center">
                         <!-- svelte-ignore a11y-img-redundant-alt -->
-                        {#if student.photo}
-                            <img src={student.photo} alt="Foto de perfil" class="rounded-circle" width="50" height="50">
+                        {#if student.image}
+                            <img src={student.image} alt="Foto de perfil" class="rounded-circle" width="50" height="50">
                         {:else}
                             <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
                                 <i class="bi bi-person"></i>

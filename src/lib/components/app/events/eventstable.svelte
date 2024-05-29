@@ -33,6 +33,10 @@
         }
     }
 
+    function resetSelected(){
+        selected.set([]);
+    }
+
     function getEventIDOrAlert(){
         let eventsIDList:number[] = [];
         selected.subscribe(value => {
@@ -77,6 +81,7 @@
                 
                 toast.success('Evento eliminado');
                 hideDeleteEventModal();
+                resetSelected();
                 loadEvents();
             }else{
                 toast.error('Error al eliminar evento');
@@ -126,6 +131,7 @@
             if(response.ok){
                 toast.success('Evento editado');
                 hideEditEventModal();
+                resetSelected();
                 loadEvents();
             }else{
                 toast.error('Error al editar evento');
@@ -175,7 +181,7 @@
     </table>
 </Datatable>
 
-<div class="modal" tabindex="-1" id="deleteEventModal" bind:this={modalDeleteEvent}>
+<div class="modal fade" tabindex="-1" id="deleteEventModal" bind:this={modalDeleteEvent}>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
