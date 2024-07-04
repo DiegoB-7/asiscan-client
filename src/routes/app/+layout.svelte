@@ -1,9 +1,14 @@
 <script>
     import Sidebar from "../../lib/components/app/general/sidebar.svelte";
 	  import Navbar from "../../lib/components/app/general/navbar.svelte";
-    
+    import toast, { Toaster } from 'svelte-french-toast';
+
+
+    toast.success('Bienvenido!')
+
 </script>
 
+<Toaster />
 
 <Navbar/>
 
@@ -15,7 +20,7 @@
       </div>
       <main class="  col ps-md-2" style="margin-top: 90px;">
         <slot></slot>
-        
+
       </main>
   </div>
 </div>

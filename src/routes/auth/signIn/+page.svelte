@@ -5,13 +5,20 @@
 	import Loading from '../../../lib/components/shared/loading.svelte';
   import toast, { Toaster } from 'svelte-french-toast';
   import { showLoading,hideLoading } from '../../../lib/stores/loading';
-  import { showSuccessToast } from '../../../lib/stores/toast';
+
   import {setToken} from '../../../lib/modules/token';
+
+
+  // import {notifications} from '../../../lib/stores/toast';
+	// import Toast from '../../../lib/components/shared/toast.svelte'
+
+
+
   let email = '';
   let password = '';
- 
+
   async function signInUser(){
-    
+
     showLoading();
     const response = await signIn(email, password);
 
@@ -21,17 +28,24 @@
       hideLoading();
       goto('/app/home');
     }else{
+
      hideLoading();
      toast.error('Credenciales incorrectas');
+
     }
   }
 
 </script>
+<Toaster />
+
+<!-- <Toast /> -->
+
   <form>
+
     <div class="mb-3">
       <label for="email" class="form-label">Correo Electronico</label>
       <input type="email" class="form-control" id="email" aria-describedby="emailHelp" bind:value={email}>
-     
+
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Contraseña</label>
@@ -41,4 +55,3 @@
   </form>
 
 <Loading />
-<Toaster />

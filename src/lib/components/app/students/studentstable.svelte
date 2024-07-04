@@ -33,12 +33,12 @@
     async function loadStudentsData(){
         let response = await getStudents();
         if(response.ok){
-           
+
             data = await response.json();
             console.log(data)
         }
     }
-    
+
     async function showDeleteUserModal(){
         let studentID = getStudentIDOrAlert();
         if(studentID){
@@ -57,7 +57,7 @@
         selected.subscribe(value => {
             eventsIDList =  value;
         });
-        
+
         if(eventsIDList.length == 1){
             return eventsIDList[0];
         }
@@ -129,7 +129,7 @@
                 email: email,
                 careerID: career
             }
-            
+
             let response = await updateStudent(studentID,student);
 
             if(response.ok){
@@ -143,7 +143,7 @@
             }
         }
     }
-    
+
     async function loadStudentData(){
         let studentID = getStudentIDOrAlert();
         if(studentID){
@@ -173,15 +173,15 @@
         <thead>
             <tr>
                 <th class="selection">
-                    
+
                 </th>
                 <Th {handler} orderBy="name">Nombre</Th>
                 <Th {handler} orderBy="career">Carrera</Th>
                 <Th {handler} orderBy="controlNumber">No. control</Th>
                 <Th {handler} orderBy="email">Correo</Th>
-                
+
             </tr>
-            
+
         </thead>
         <tbody use:autoAnimate>
             {#each $rows as row}
@@ -193,12 +193,10 @@
                             checked={$selected.includes(row.ID)}
                         />
                     </td>
-                    <td>{row.name}</td>
-                    <td>{row.career}</td>
-                    <td>{row.controlNumber}</td>
-                    <td>{row.email}</td>
-                    
-
+                    <td class="w-100 p-2">{row.name}</td>
+                    <td class="w-100 p-2">{row.career}</td>
+                    <td class="p-2">{row.controlNumber}</td>
+                    <td class="p-2">{row.email}</td>
                 </tr>
             {/each}
         </tbody>
@@ -235,7 +233,7 @@
             </div>
             <form>
                 <div class="modal-body">
-                   
+
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="first-name" class="form-label">Nombre</label>
@@ -270,7 +268,7 @@
                                 {/each}
                             </select>
                     </div>
-    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal" on:click={hideEditStudentModal}>Cerrar</button>
@@ -281,4 +279,3 @@
         </div>
     </div>
 </div>
-

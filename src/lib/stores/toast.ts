@@ -1,30 +1,55 @@
-import { writable } from 'svelte/store';
+// notifications.ts
+import { writable, derived, type Writable } from "svelte/store";
 
-export const toast = writable(false);
-export const toastMessage = writable('');
-export const toastType = writable('success');
-export const toastTitle = writable('');
+const TIMEOUT = 3000;
 
-export function showSuccessToast(title:string, message:string) {
-    toastType.set('success');
-    toastTitle.set(title);
-    toastMessage.set(message);
-    toast.set(true);
-    
-    setTimeout(() => {
-        toast.set(false);
-    }, 3000);
+type NotificationType = "default" | "danger" | "warning" | "info" | "success";
+
+export interface Notification {
+  id: string;
+  type: NotificationType;
+  message: string;
+  timeout: number;
 }
 
-export function showErrorToast(title:string, message:string) {
-    toastType.set('error');
-    toastTitle.set(title);
-    toastMessage.set(message);
-    toast.set(true);
+function createNotificationStore(timeout: number = TIMEOUT) {
+  const _notifications: Writable<Notification[]> = writable([]);
 
-    setTimeout(() => {
-        toast.set(false);
-    }, 3000);
+  function send(message: string, type: NotificationType = "default", timeout: number = TIMEOUT) {
+    _notifications.update(state => {
+      return [...state, { id: generateId(), type, message, timeout }];
+    });
+  }
+
+  const notifications = derived(_notifications, ($_notifications, set) => {
+    set($_notifications);
+    if ($_notifications.length > 0) {
+      const timer = setTimeout(() => {
+        _notifications.update(state => {
+          state.shift();
+          return state;
+        });
+      }, $_notifications[0].timeout);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  });
+  const { subscribe } = notifications;
+
+  return {
+    subscribe,
+    send,
+    default: (msg: string, timeout?: number) => send(msg, "default", timeout),
+    danger: (msg: string, timeout?: number) => send(msg, "danger", timeout),
+    warning: (msg: string, timeout?: number) => send(msg, "warning", timeout),
+    info: (msg: string, timeout?: number) => send(msg, "info", timeout),
+    success: (msg: string, timeout?: number) => send(msg, "success", timeout),
+  };
 }
 
+function generateId(): string {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
 
+export const notifications = createNotificationStore();

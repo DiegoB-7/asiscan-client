@@ -3,6 +3,8 @@
   import { getCareers } from '../../../API/careers.svelte';
   import { signUp } from '../../../API/auth.svelte';
   import toast, { Toaster } from 'svelte-french-toast';
+  import { goto } from '$app/navigation';
+
   let careersList:any[] = [];
 
   let data = {
@@ -27,6 +29,9 @@
     const response = await signUp(data.email, data.password, data.firstName, data.middleName, data.lastName, data.careerID);
     if(response.ok){
       console.log('Usuario creado');
+      //redirect to login
+      goto('./signIn');
+
     }else{
       console.log('Error al crear usuario');
     }

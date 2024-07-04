@@ -12,7 +12,7 @@ onMount(async () => {
 
   // some components require a bootstrap instance, to fulfil their job. In that case, use this:
   // const bootstrap = await import("bootstrap");
-  // sample usage: 
+  // sample usage:
   // const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
 });</script>
 

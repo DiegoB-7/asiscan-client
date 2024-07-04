@@ -9,20 +9,20 @@
     let firstName = '';
     let middleName = '';
     let lastName = '';
-    
+
     let controlNumber = '';
-    
+
     let careersData:any[] = [];
     let email = '';
     let career = '';
     let studentsData:any[] = [];
 
     onMount(async () => {
-        
-       
+
+
         loadCareersData();
     });
-    
+
     async function showManageStudentsModal() {
         loadStudentsData();
         const bootstrap = await import('bootstrap');
@@ -56,7 +56,7 @@
         let response = await getStudents();
         if(response.ok){
             let data = await response.json();
-            
+
             studentsData = data;
         }
     }
@@ -80,7 +80,7 @@
 
     async function saveStudentData(){
         if(firstName && middleName && lastName && controlNumber && email && career){
-           
+
             if(email.indexOf('@') === -1 || email.indexOf('.') === -1){
                 toast.error('Ingrese un correo valido');
                 return;
@@ -96,15 +96,15 @@
             alert(response.status)
             if(response.ok){
                 toast.success('Estudiante registrado correctamente');
-                
+
                 loadStudentsData();
-                
+
                 hideRegisterStudentModal();
                 resetForm();
             }else{
                 toast.error('Error al registrar estudiante');
             }
-            
+
         }else{
             toast.error('Llene todos los campos');
         }
@@ -152,14 +152,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Administrar estudiantes</h5>
-          
+
         </div>
         <div class="modal-body">
             <Students data={studentsData}/>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" on:click={hideManageUserModal}>Cerrar</button>
-          
+
         </div>
       </div>
     </div>
@@ -171,11 +171,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Administrar estudiantes</h5>
-          
+
         </div>
         <form>
             <div class="modal-body">
-                
+
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="first-name" class="form-label">Nombre</label>
@@ -210,7 +210,7 @@
                             {/each}
                         </select>
                 </div>
-        
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" on:click={hideRegisterStudentModal}>Cerrar</button>
@@ -220,4 +220,3 @@
       </div>
     </div>
 </div>
-
