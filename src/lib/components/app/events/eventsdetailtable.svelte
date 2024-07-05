@@ -87,7 +87,7 @@
             const bootstrap = await import('bootstrap');
             // @ts-ignore
             loadAssistData();
-            resetSelected();
+           
             const EditEvent =  bootstrap.Modal.getOrCreateInstance(modalEditRegister);
             EditEvent.show();
         }

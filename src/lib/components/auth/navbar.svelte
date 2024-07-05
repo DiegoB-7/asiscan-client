@@ -2,7 +2,7 @@
   <div class=" container-fluid">
 
     <div class="d-flex justify-content-center w-100">
-      <div>
+      <div class="py-3">
          <a class="navbar-brand" href="/auth/signIn">
         <div class=" d-flex justify-content-center align-items-center">
           <img src="/logo_TECNM.svg" alt="Logo" width="60" class="img-fluid" />

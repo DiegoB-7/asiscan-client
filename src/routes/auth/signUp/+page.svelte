@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
   import { getCareers } from '../../../API/careers.svelte';
   import { signUp } from '../../../API/auth.svelte';
   import toast, { Toaster } from 'svelte-french-toast';
@@ -26,14 +27,15 @@
   async function signUpUser(){
     const response = await signUp(data.email, data.password, data.firstName, data.middleName, data.lastName, data.careerID);
     if(response.ok){
-      console.log('Usuario creado');
+      toast.success('Usuario creado exitosamente');
+      goto('/auth/signIn');
     }else{
       console.log('Error al crear usuario');
     }
   }
 </script>
 
-<form>
+<form class="px-5">
     <div class="row mb-3">
       <div class="col">
         <label for="first-name" class="form-label text-muted">Nombre</label>

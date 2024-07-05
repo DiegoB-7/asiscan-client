@@ -21,6 +21,7 @@
     let lastName = '';
     let maternalName = '';
     let controlNumber = '';
+    let tmpURL = '';
     let searchStudentControlNumber = '';
     let careersData:any[] = [];
     let email = '';
@@ -29,6 +30,7 @@
     let studentsData:any[] = [];
     onMount(async () => {
         removeBackgroundBug();
+       
         loadStudentsData();
         loadCareersData();
         qrScanner = new QrScanner(
@@ -135,6 +137,11 @@
 
     async function showQrResult(result:any) {
         showLoading();
+        if (result.data === tmpURL) {
+            hideLoading();
+            return;
+        }
+        tmpURL = result.data;
         if (debounceTimeout) {
             clearTimeout(debounceTimeout);
         }
@@ -155,7 +162,7 @@
                 toast.error('Error al registrar estudiante');
             }
             hideLoading();
-        }, 400);
+        }, 500);
        
     }
 
