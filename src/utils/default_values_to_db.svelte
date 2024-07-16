@@ -2,9 +2,18 @@
 
 
 <script context="module" lang="ts">
+
+
+  import { generatePassword } from './util_default_values.svelte';
+
+  import { SendMail } from './send_admin_password_email';
+
   //import necessary functions
   import { isCareerEmpty, createCareer } from '../API/careers.svelte';
   import { isRolEmpty, createRol } from '../API/rols.svelte';
+
+  import { isUserEmpty } from '../API/user.svelte';
+  import { signUp } from '../API/auth.svelte';
 
   export async function default_values_to_db_function() {
 
@@ -42,11 +51,8 @@
       console.log('Rols are empty, creating data');
 
       let default_rols = [
-
-        {name: 'ADMIN'},
-        {name: 'USER'},
-        {name: 'GUEST'},
-
+        {name: 'Administrador'},
+        {name: 'Usuario'},
       ];
 
       for(let i = 0; i < default_rols.length; i++){
@@ -63,10 +69,39 @@
 
     }
 
+    if(await isUserEmpty()){
+
+      let new_password = generatePassword();
+
+      console.log('Users are empty, creating data');
+
+      //generate random password
+      console.log(new_password);
+
+      SendMail(new_password);
+
+
+      let default_users = [
+        {
+        firstName: 'Admin',
+        middleName: '',
+        lastName: 'Admin',
+        careerID: 1,
+        rolID: 1,
+        email: "admin@admin",
+        password: new_password,
+        }
+      ];
+
+
+      }else{
+
+      console.log('Users are not empty');
+
+      }
+
 
 
   }
-
-
 
 </script>

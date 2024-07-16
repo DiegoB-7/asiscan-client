@@ -2,9 +2,11 @@
     import { getToken } from '$lib/modules/token';
     import {environment} from '$lib/environment'
 
+
+
     export async function getProfileData(){
         const token = getToken();
-       
+
         const response = await fetch(`${environment.API_URL}/users/me`, {
             method: 'GET',
             headers: {
@@ -15,10 +17,10 @@
 
         return response;
     }
-    
+
     export async function getUsers(){
         const token = getToken();
-       
+
         const response = await fetch(`${environment.API_URL}/users`, {
             method: 'GET',
             headers: {
@@ -29,10 +31,10 @@
 
         return response;
     }
-    
+
     export async function getUser(id:number){
         const token = getToken();
-       
+
         const response = await fetch(`${environment.API_URL}/users/${id}`, {
             method: 'GET',
             headers: {
@@ -46,7 +48,7 @@
 
     export async function deleteUser(id:number){
         const token = getToken();
-       
+
         const response = await fetch(`${environment.API_URL}/users/${id}`, {
             method: 'DELETE',
             headers: {
@@ -60,7 +62,7 @@
 
     export async function updateUser(id:number,user:any){
         const token = getToken();
-       
+
         const response = await fetch(`${environment.API_URL}/users/${id}`, {
             method: 'PUT',
             headers: {
@@ -72,4 +74,18 @@
 
         return response;
     }
+
+    //is user table empty?
+    export async function isUserEmpty(){
+
+        const response = await fetch(`${environment.API_URL}/users/is_empty`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        return response.json();
+    }
+
 </script>

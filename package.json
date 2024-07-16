@@ -42,6 +42,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@emailjs/browser": "^4.4.1",
 		"@formkit/auto-animate": "^0.8.2",
 		"bootstrap-icons": "^1.11.3",
 		"qr-scanner": "^1.4.2",
