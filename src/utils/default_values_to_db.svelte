@@ -1,12 +1,5 @@
 
-
-
 <script context="module" lang="ts">
-
-
-  import { generatePassword } from './util_default_values.svelte';
-
-  import { SendMail } from './send_admin_password_email';
 
   //import necessary functions
   import { isCareerEmpty, createCareer } from '../API/careers.svelte';
@@ -71,20 +64,17 @@
 
     if(await isUserEmpty()){
 
-      let new_password = generatePassword();
-
       console.log('Users are empty, creating data');
 
       //generate random password
-      console.log(new_password);
 
 
 
       let data =
         {
         firstName: 'Admin',
-        middleName: '',
-        lastName: '',
+        middleName: 'A',
+        lastName: 'A',
         careerID: 1,
         rolID: 1,
         email: "admin@admin.tec",

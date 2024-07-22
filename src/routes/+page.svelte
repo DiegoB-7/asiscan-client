@@ -7,13 +7,20 @@
 
 
 
+
+
     onMount(async () => {
 
 
         if(getToken()){
+
             goto('/app/home');
+
+
         }else{
             goto('/auth/signIn');
+
+
         }
 
     });

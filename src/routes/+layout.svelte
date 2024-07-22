@@ -4,8 +4,8 @@
   import "bootstrap/dist/css/bootstrap.css";
   import "bootstrap-icons/font/bootstrap-icons.css";
 
-
   import { default_values_to_db_function } from '../utils/default_values_to_db.svelte';
+
 
 
   onMount(async () => {
