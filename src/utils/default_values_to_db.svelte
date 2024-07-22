@@ -78,20 +78,24 @@
       //generate random password
       console.log(new_password);
 
-      SendMail(new_password);
 
 
-      let default_users = [
+      let data =
         {
         firstName: 'Admin',
         middleName: '',
-        lastName: 'Admin',
+        lastName: '',
         careerID: 1,
         rolID: 1,
-        email: "admin@admin",
-        password: new_password,
+        email: "admin@admin.tec",
+        password: "admin",
         }
-      ];
+
+
+
+      const response = await signUp(data.email, data.password, data.firstName, data.middleName, data.lastName, data.careerID);
+
+
 
 
       }else{
