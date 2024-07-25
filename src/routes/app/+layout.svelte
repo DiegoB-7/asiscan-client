@@ -1,7 +1,7 @@
 <script>
     import Sidebar from "../../lib/components/app/general/sidebar.svelte";
 	  import Navbar from "../../lib/components/app/general/navbar.svelte";
-    
+
 </script>
 
 
@@ -15,7 +15,7 @@
       </div>
       <main class="  col ps-md-2" style="margin-top: 90px;">
         <slot></slot>
-        
+
       </main>
   </div>
 </div>

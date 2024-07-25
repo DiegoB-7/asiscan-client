@@ -77,14 +77,12 @@
 
     //is user table empty?
     export async function isUserEmpty(){
-
         const response = await fetch(`${environment.API_URL}/users/is_empty`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             }
         });
-
         return response.json();
     }
 

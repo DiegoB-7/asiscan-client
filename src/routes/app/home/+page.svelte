@@ -8,10 +8,14 @@
 </div>
 <p class="lead">Módulos del sistema</p>
 <hr>
+<style>
+  .custom-max-width {
+    max-width: 500px;
+  }
+</style>
+<div class="custom-max-width d-flex flex-column gap-2">
 
-<div class="w-100 d-flex flex-column gap-3">
-
-  <a href="/app/events" class="w-25 btn btn-primary px-4 d-flex gap-4">
+  <a href="/app/events" class=" btn btn-primary px-4 d-flex gap-4">
     <div class="  d-flex justify-content-center align-items-center">
       <Icon icon="mdi:calendar"  width="32" height="32" />
     </div>
@@ -21,10 +25,9 @@
       </div>
       <p class="lead fs-6">Crear, editar y ver eventos de asistencia</p>
     </div>
-
   </a>
 
-  <a href="/app/users" class="w-25 btn btn-primary px-4 d-flex gap-4">
+  <a href="/app/users" class=" btn btn-primary px-4 d-flex gap-4">
     <div class="  d-flex justify-content-center align-items-center">
       <Icon icon="mdi:users" width="32" height="32" />
     </div>
@@ -37,7 +40,8 @@
 
   </a>
 
-  <a href="/app/students" class="w-25 btn btn-primary px-4 d-flex gap-4">
+
+  <a href="/app/students" class=" btn btn-primary px-4 d-flex gap-4">
     <div class="  d-flex justify-content-center align-items-center">
       <Icon icon="ph:student" width="32" height="32" />
     </div>

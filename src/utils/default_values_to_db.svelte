@@ -68,17 +68,15 @@
 
       //generate random password
 
-
-
       let data =
         {
-        firstName: 'Admin',
-        middleName: 'A',
-        lastName: 'A',
-        careerID: 1,
-        rolID: 1,
-        email: "admin@admin.tec",
-        password: "admin",
+          firstName: 'Admin',
+          middleName: 'a',
+          lastName: 'a',
+          careerID: 1,
+          rolID: 1,
+          email: "admin@admin.tec",
+          password: "admin"
         }
 
 
