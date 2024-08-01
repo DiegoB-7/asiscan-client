@@ -3,7 +3,7 @@
     import { onMount,afterUpdate } from 'svelte';
     import toast, { Toaster } from 'svelte-french-toast';
     import { getEvents,getEventData,editEvent,getEvent,getEventExcel,getAssistData,updateAssist,deleteAssist } from '../../../../API/events.svelte';
-    
+
     import autoAnimate from "@formkit/auto-animate"
     import { createEventDispatcher } from 'svelte';
 
@@ -35,7 +35,7 @@
         selected.subscribe(value => {
             eventsIDList =  value;
         });
-        
+
         if(eventsIDList.length == 1){
             return eventsIDList[0];
         }
@@ -87,7 +87,7 @@
             const bootstrap = await import('bootstrap');
             // @ts-ignore
             loadAssistData();
-           
+
             const EditEvent =  bootstrap.Modal.getOrCreateInstance(modalEditRegister);
             EditEvent.show();
         }
@@ -114,7 +114,7 @@
         if(registerID){
             let response = await getAssistData(registerID);
             assistData = await response.json();
-            
+
         }
     }
 
@@ -135,7 +135,7 @@
         else{
             toast.error('La cantidad de asistencias es requerida');
         }
-        
+
     }
 
     function emptyAssistData(){
@@ -168,7 +168,7 @@
     <h5 class="text-right">Acciones</h5>
     <div class="d-flex flex-row-reverse ">
         <button class="btn btn-primary btn-sm mx-1" on:click={showEditRegisterModal}>Modificar registro</button>
-        
+
         <button class="btn btn-danger btn-sm mx-1" on:click={showDeleteRegisterModal} >Eliminar registro</button>
         <button class="btn btn-info btn-sm mx-1" on:click={showExportExcelModal}>Exportar lista de asistencias</button>
     </div>
@@ -178,7 +178,7 @@
         <thead>
             <tr>
                 <th class="selection">
-                    
+
                 </th>
                 <Th {handler} orderBy="student">Nombre</Th>
                 <Th {handler} orderBy="control_number">No. control</Th>
@@ -187,7 +187,7 @@
                 <Th {handler} orderBy="user">Usuario quien registro</Th>
                 <Th {handler} orderBy="createdAt">Fecha de creación</Th>
             </tr>
-            
+
         </thead>
         <tbody use:autoAnimate>
             {#each $rows as row}

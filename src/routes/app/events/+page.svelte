@@ -4,7 +4,7 @@
     import { showLoading,hideLoading } from '../../../lib/stores/loading';
     import { createEvent, getEvents } from '../../../API/events.svelte';
     import toast, { Toaster } from 'svelte-french-toast';
-    
+
     /**
 	 * @type {string | Element }
 	 */
@@ -28,7 +28,7 @@
         CreateEvents.hide();
     }
 
-    
+
 
     async function showManageEventModal() {
         loadEvents();
@@ -42,7 +42,7 @@
         const response = await getEvents();
         if(response.ok){
             events = await response.json();
-            
+
         }
     }
 
@@ -62,7 +62,7 @@
         }
 
         const response = await createEvent(name);
-        
+
         if(response.ok){
             hideCreateEventModal();
             loadEvents();
@@ -80,7 +80,7 @@
 </div>
 <p class="lead">Modulo para la gestión de eventos</p>
 <hr>
-<div class="row">
+<div class="row gap-3">
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
@@ -112,16 +112,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Crear evento</h5>
-          
+
         </div>
         <form>
             <div class="modal-body">
-                
+
                     <div class="mb-3">
                         <label for="email" class="form-label">Nombre del evento</label>
                         <input type="text" class="form-control" id="name" aria-describedby="emailHelp" bind:value={name}>
                     </div>
-                
+
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal" on:click={hideCreateEventModal}>Cerrar</button>
@@ -137,14 +137,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Administrar eventos</h5>
-          
+
         </div>
         <div class="modal-body">
             <Eventstable events={events}/>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" on:click={hideManageEventModal}>Cerrar</button>
-          
+
         </div>
       </div>
     </div>
@@ -153,4 +153,3 @@
 
 
 <Toaster />
-

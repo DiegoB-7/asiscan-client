@@ -1,6 +1,31 @@
 <!--styled buttons to other pages-->
 <script>
   import Icon from '@iconify/svelte';
+  import { user } from "../../../lib/stores/user";
+  import { removeToken } from "$lib/modules/token";
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import { getProfileData } from "../../../API/user.svelte";
+  import { getToken } from "$lib/modules/token";
+
+  var rol = "";
+
+  onMount(async () => {
+      if (getToken()) {
+          const response = await getProfileData();
+          if(response.ok){
+              const data = await response.json();
+              rol = data.rol;
+          }
+          goto('/app/home');
+      }
+      else{
+          goto('/auth/signIn');
+      }
+  });
+
+
+
 </script>
 
 <div class="page-header pt-3">
@@ -27,6 +52,7 @@
     </div>
   </a>
 
+  {#if (rol === "Administrador")}
   <a href="/app/users" class=" btn btn-primary px-4 d-flex gap-4">
     <div class="  d-flex justify-content-center align-items-center">
       <Icon icon="mdi:users" width="32" height="32" />
@@ -39,6 +65,10 @@
     </div>
 
   </a>
+  {/if}
+
+
+
 
 
   <a href="/app/students" class=" btn btn-primary px-4 d-flex gap-4">
