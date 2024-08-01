@@ -17,7 +17,7 @@
     let quantityAssist:number = 0;
     let handler = new DataHandler(data,{rowsPerPage: 5});
     let rows = handler.getRows();
-    let selected = handler.getSelected();
+    // let selected = handler.getSelected();
     let isAllSelected = handler.isAllSelected();
     const dispatch = createEventDispatcher();
 
@@ -25,6 +25,42 @@
         handler.setRows(data);
         rows = handler.getRows();
     })
+
+
+
+
+    ///ADDED BY SAMUEL HIRAM-------------------------------------
+import { writable } from 'svelte/store';
+
+const selected = writable<number[]>([]); // Define 'selected' como un array de números
+
+function handleSelect(id: number) {
+    selected.update((current: number[]) => {
+        if (current.includes(id)) {
+            return current.filter(item => item !== id);
+        } else {
+            return [...current, id];
+        }
+    });
+}
+
+// Sincronizar los IDs seleccionados con las filas visibles
+rows.subscribe(value => {
+    const visibleIds = value.map(row => row.ID);
+    selected.update(current => current.filter(id => visibleIds.includes(id)));
+});
+
+// Depuración de los IDs visibles después de aplicar el filtro
+rows.subscribe(value => {
+    console.log('Visible rows:', value.map(row => row.ID));
+});
+
+// Depuración de los IDs seleccionados
+selected.subscribe(value => {
+    console.log('Selected IDs:', value);
+});
+
+///ADDED BY SAMUEL HIRAM-------------------------------------
 
     async function loadEventData(){
         dispatch('loadData');
@@ -195,7 +231,7 @@
                     <td class="selection">
                         <input
                             type="checkbox"
-                            on:click={() => handler.select(row.ID)}
+                            on:click={() => handleSelect(row.ID)}
                             checked={$selected.includes(row.ID)}
                         />
                     </td>

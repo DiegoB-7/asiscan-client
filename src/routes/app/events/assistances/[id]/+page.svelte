@@ -9,6 +9,7 @@
     import { showLoading,hideLoading } from '$lib/stores/loading';
     export let data;
 
+    var event_id = data.id;
     let qrScanner:any;
     let videoElem:any;
     let debounceTimeout:any;
@@ -79,7 +80,7 @@
         showLoading();
         if(searchStudentControlNumber){
             
-            const response = await saveStudentAssitanceByControlNumber(searchStudentControlNumber, data.id);
+            const response = await saveStudentAssitanceByControlNumber(searchStudentControlNumber, event_id);
             if(response.status === 201){
                 toast.success('Estudiante registrado correctamente');
                 let data = await response.json();
@@ -114,6 +115,10 @@
                 toast.success('Estudiante registrado correctamente');
                 let data = await response.json();
                 loadStudentsData();
+                
+                await saveStudentAssitanceByControlNumber(controlNumber, event_id);
+                tmpStudents = [...tmpStudents, data];
+
                 
                 hideRegisterStudentModal();
                 resetForm();
